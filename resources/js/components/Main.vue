@@ -2,7 +2,7 @@
     <div class="main">
         <div class="nav">
             <p>XndrGPT</p>
-            <img alt="" src="@/assets/user_icon.png"/>
+            <img alt="" src="/imgs/user-icon.jpg"/>
         </div>
         <div class="main-container">
             <!-- Conditional rendering based on showResult -->
@@ -15,18 +15,18 @@
                     <!-- Repeatable cards -->
                     <div v-for="(_, index) in 4" :key="index" class="card">
                         <p>Suggest beautiful places to see on an upcoming road trip</p>
-                        <img alt="" src="@/assets/compass_icon.png"/>
+                        <img alt="" src="/imgs/compass_icon.png"/>
                     </div>
                 </div>
             </template>
             <template v-else>
                 <div class="result">
                     <div class="result-title">
-                        <img alt="" src="@/assets/user_icon.png"/>
+                        <img alt="" src="/imgs/user-icon.jpg"/>
                         <p>{{ recentPrompt }}</p>
                     </div>
                     <div class="result-data">
-                        <img alt="" src="@/assets/gemini_icon.png"/>
+                        <img alt="" src="/imgs/gemini_icon.png"/>
                         <!-- Conditional rendering based on resultData -->
                         <template v-if="resultData">
                             <!-- Loading indicator -->
@@ -57,7 +57,7 @@
                     <input v-model="input" placeholder="Enter a prompt here" type="text"
                            @keypress.enter="handleKeyPress"/>
                     <div>
-                        <img v-if="input" alt="" src="@/assets/send_icon.png" @click="onSent"/>
+                        <img v-if="input" alt="" src="/imgs/send_icon.png" @click="onSent"/>
                     </div>
                 </div>
                 <p class="bottom-info">
