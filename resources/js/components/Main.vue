@@ -19,13 +19,20 @@
                     </div>
                 </div>
             </template>
-            <template v-else>
+            <div v-else>
                 <div class="result">
-                    <div class="result-title">
-                        <img alt="" src="/imgs/user-icon.jpg"/>
-                        <p>{{ recentPrompt }}</p>
+                    <div v-for="(message, index) in history"
+                         :key="index" :class="message.from === 'user' ? 'result-title' : 'result-data'">
+                        <img :alt="message.from === 'user' ? 'user-icon' : 'laravellama-logo'"
+                             :src="message.from === 'user' ? '/imgs/user-icon.jpg' : '/imgs/laravellama-logo.jpg'"/>
+                        <p class="p-2">{{ message.message }}</p>
                     </div>
-                    <div class="result-data">
+
+                    <!--                    <div class="result-title">-->
+                    <!--                        <img alt="" src="/imgs/user-icon.jpg"/>-->
+                    <!--                        <p>{{ recentPrompt }}</p>-->
+                    <!--                    </div>-->
+                    <div v-if="loading" class="result-data">
                         <a href="https://github.com/xndrgit/xndr-laravellama">
                             <img alt='laravellama-logo' src="/imgs/laravellama-logo.jpg"/>
                         </a>
@@ -35,18 +42,17 @@
                             <hr/>
                             <hr/>
                         </div>
+                        <!--                        <p v-else>{{ response }}</p>-->
 
-                        <p v-else>{{ response }}</p>
-
-                        <!-- Fallback message -->
-                        <!--                        <div>-->
-                        <!--                            <a href="#">-->
-                        <!--                                <p>Error404</p>-->
-                        <!--                            </a>-->
-                        <!--                        </div>-->
+                        <!--                         Fallback message -->
+                        <!--                                                <div>-->
+                        <!--                                                    <a href="#">-->
+                        <!--                                                        <p>Error404</p>-->
+                        <!--                                                    </a>-->
+                        <!--                                                </div>-->
                     </div>
                 </div>
-            </template>
+            </div>
 
             <div class="main-bottom">
                 <div class="search-box">
@@ -70,6 +76,14 @@
 export default {
     data() {
         return {
+            history: [
+                {
+                    message: 'Hello, Xndr. How can I help you today?',
+                    from: 'bot',
+                },
+            ],
+
+
             input: '',
             showResult: false,
             recentPrompt: '',
@@ -79,6 +93,14 @@ export default {
     },
     methods: {
         onSent() {
+            if (this.input.trim() === '') return;
+
+            // Add user's prompt to history
+            this.history.push({
+                message: this.input,
+                from: 'user'
+            });
+
             // Implement logic for sending a prompt to the backend
             this.showResult = true;
             this.recentPrompt = this.input;
@@ -114,6 +136,10 @@ export default {
                 console.log(error.message);
                 this.response = `Install & Open Ollama App to get a response. Error: ${error.message}`;
             } finally {
+                this.history.push({
+                    message: this.response,
+                    from: 'bot'
+                });
                 this.loading = false;
             }
         },
@@ -265,7 +291,7 @@ export default {
         .result-title {
             margin: 40px 0;
             display: flex;
-            align-items: center;
+            align-items: start;
             gap: 20px;
 
 
@@ -274,7 +300,7 @@ export default {
         .result-data {
             margin: 40px 0;
             display: flex;
-            align-items: center;
+            align-items: start;
             gap: 20px;
 
             .loader {
