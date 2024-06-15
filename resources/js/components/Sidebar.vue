@@ -16,7 +16,7 @@
         </div>
 
         <div class="bottom">
-            <div v-for="(item, index) in bottomItems" :key="index" class="bottom-item recent-entry">
+            <div v-for="(item, index) in bottomItems" :key="index" class="bottom-item recent-entry align-items-center">
                 <img :src="item.icon" alt=""/>
                 <p v-if="extended">{{ item.label }}</p>
             </div>
@@ -57,7 +57,7 @@ export default {
     padding: 25px 15px;
 
     img {
-        width: 20px;
+        width: 25px;
     }
 
     .menu {

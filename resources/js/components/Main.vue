@@ -26,28 +26,24 @@
                         <p>{{ recentPrompt }}</p>
                     </div>
                     <div class="result-data">
-                        <img alt="" src="/imgs/gemini_icon.png"/>
-                        <!-- Conditional rendering based on resultData -->
-                        <template v-if="resultData">
-                            <!-- Loading indicator -->
-                            <template v-if="loading">
-                                <div class="loader">
-                                    <hr/>
-                                    <hr/>
-                                    <hr/>
-                                </div>
-                            </template>
-                            <!-- Result data -->
-                            <template v-else>
-                                <p v-html="resultData"></p>
-                            </template>
-                        </template>
+                        <a href="https://github.com/xndrgit/xndr-laravellama">
+                            <img alt='laravellama-logo' src="/imgs/laravellama-logo.jpg"/>
+                        </a>
+                        <!-- Loading indicator -->
+                        <div v-if="loading" class="loader">
+                            <hr/>
+                            <hr/>
+                            <hr/>
+                        </div>
+
+                        <p v-else>{{ response }}</p>
+
                         <!-- Fallback message -->
-                        <template v-else>
-                            <a href="https://console.cloud.google.com/billing">
-                                <p>You can't use me without a billing account linked.</p>
-                            </a>
-                        </template>
+                        <!--                        <div>-->
+                        <!--                            <a href="#">-->
+                        <!--                                <p>Error404</p>-->
+                        <!--                            </a>-->
+                        <!--                        </div>-->
                     </div>
                 </div>
             </template>
@@ -55,7 +51,7 @@
             <div class="main-bottom">
                 <div class="search-box">
                     <input v-model="input" placeholder="Enter a prompt here" type="text"
-                           @keypress.enter="handleKeyPress"/>
+                           @keypress.enter="onSent"/>
                     <div>
                         <img v-if="input" alt="" src="/imgs/send_icon.png" @click="onSent"/>
                     </div>
@@ -77,19 +73,51 @@ export default {
             input: '',
             showResult: false,
             recentPrompt: '',
-            resultData: '',
+            response: null,
             loading: false
         };
     },
     methods: {
         onSent() {
-            // Implement your logic for handling the sent message
+            // Implement logic for sending a prompt to the backend
+            this.showResult = true;
+            this.recentPrompt = this.input;
+            this.input = '';
+            this.loading = true;
+
+            this.$nextTick(() => {
+                this.getResponse();
+            });
         },
-        handleKeyPress(event) {
-            if (event.key === 'Enter') {
-                this.onSent();
+
+        async getResponse() {
+            try {
+                console.log('Sending request with prompt:', this.recentPrompt); // Debugging log
+                const res = await fetch('/api/ollama-response', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ prompt: this.recentPrompt }),
+                });
+
+                if (!res.ok) {
+                    throw new Error(`HTTP error! status: ${res.status}`);
+                }
+
+                const data = await res.json();
+                console.log('Received response:', data); // Debugging log
+
+                this.response = data.response;
+            } catch (error) {
+                console.error('Error fetching response:', error);
+                console.log(error.message);
+                this.response = `Install & Open Ollama App to get a response. Error: ${error.message}`;
+            } finally {
+                this.loading = false;
             }
-        }
+        },
+
     },
     mounted() {
         console.log('Component mounted.');
@@ -224,6 +252,12 @@ export default {
         max-height: 70vh;
         overflow-y: scroll;
 
+        img {
+            min-width: 40px;
+            width: 40px;
+            border-radius: 50%;
+        }
+
         &::-webkit-scrollbar {
             display: none;
         }
@@ -234,15 +268,13 @@ export default {
             align-items: center;
             gap: 20px;
 
-            img {
-                width: 40px;
-                border-radius: 50%;
-            }
+
         }
 
         .result-data {
+            margin: 40px 0;
             display: flex;
-            align-items: start;
+            align-items: center;
             gap: 20px;
 
             .loader {
@@ -263,11 +295,11 @@ export default {
                 }
             }
 
-            p {
-                font-size: 17px;
-                font-weight: 300;
-                line-height: 1.8;
-            }
+            //p {
+            //    font-size: 17px;
+            //    font-weight: 300;
+            //    line-height: 1.8;
+            //}
         }
     }
 
