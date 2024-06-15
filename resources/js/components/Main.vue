@@ -20,7 +20,7 @@
                 </div>
             </template>
             <div v-else>
-                <div class="result">
+                <div ref="chatBox" class="result">
                     <div v-for="(message, index) in history"
                          :key="index" :class="message.from === 'user' ? 'result-title' : 'result-data'">
                         <img :alt="message.from === 'user' ? 'user-icon' : 'laravellama-logo'"
@@ -92,6 +92,17 @@ export default {
         };
     },
     methods: {
+        scrollToBottom() {
+            const chatBox = this.$refs.chatBox;
+            if (chatBox && chatBox.scrollHeight) {
+                const scrollTop = chatBox.scrollHeight;
+                chatBox.scrollTo({
+                    top: scrollTop,
+                    left: 0,
+                    behavior: 'smooth'
+                });
+            }
+        },
         onSent() {
             if (this.input.trim() === '') return;
 
@@ -100,6 +111,7 @@ export default {
                 message: this.input,
                 from: 'user'
             });
+            this.scrollToBottom();
 
             // Implement logic for sending a prompt to the backend
             this.showResult = true;
@@ -107,7 +119,9 @@ export default {
             this.input = '';
             this.loading = true;
 
+
             this.$nextTick(() => {
+                this.scrollToBottom();
                 this.getResponse();
             });
         },
@@ -141,6 +155,7 @@ export default {
                     from: 'bot'
                 });
                 this.loading = false;
+                this.scrollToBottom();
             }
         },
 
@@ -273,10 +288,13 @@ export default {
         }
     }
 
+
     .result {
         padding: 0 5%;
         max-height: 70vh;
         overflow-y: scroll;
+        scrollbar-width: thin; /* Firefox */
+        scrollbar-color: #888 #f0f4f9; /* Firefox */
 
         img {
             min-width: 40px;
