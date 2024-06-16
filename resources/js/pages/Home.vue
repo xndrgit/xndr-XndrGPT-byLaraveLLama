@@ -1,7 +1,7 @@
 <template>
     <div class="d-flex">
-        <Sidebar/>
-        <Main/>
+        <Sidebar @show-result="handleShowResult"/>
+        <Main :showResultGift="showResult"/>
     </div>
 </template>
 
@@ -16,6 +16,17 @@ export default {
     components: {
         Main,
         Sidebar,
-    }
+    },
+    data() {
+        return {
+            showResult: null, // Initialize to false or as needed
+        };
+    },
+    methods: {
+        handleShowResult(showResult) {
+            this.showResult = showResult;
+        }
+    },
+
 }
 </script>

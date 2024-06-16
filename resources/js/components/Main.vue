@@ -63,9 +63,7 @@
                     </div>
                 </div>
                 <p class="bottom-info">
-                    XndrGPT may display inaccurate info, including about people, do double-check its responses. Your
-                    privacy and
-                    XndrGPT Apps
+                    XndrGPT may display inaccurate info, including about people, do double-check its responses.
                 </p>
             </div>
         </div>
@@ -74,6 +72,14 @@
 
 <script>
 export default {
+    watch: {
+        showResultGift(newValue, oldValue) {
+            this.showResult = newValue;
+        }
+    },
+    props: {
+        showResultGift: Boolean,
+    },
     data() {
         return {
             history: [
@@ -85,7 +91,7 @@ export default {
 
 
             input: '',
-            showResult: false,
+            showResult: null,
             recentPrompt: '',
             response: null,
             loading: false
@@ -148,7 +154,7 @@ export default {
             } catch (error) {
                 console.error('Error fetching response:', error);
                 console.log(error.message);
-                this.response = `Install & Open Ollama App to get a response. Error: ${error.message}`;
+                this.response = `${error.message} ► Install & Open Ollama to get a response.`;
             } finally {
                 this.history.push({
                     message: this.response,
@@ -158,7 +164,6 @@ export default {
                 this.scrollToBottom();
             }
         },
-
     },
     mounted() {
         console.log('Component mounted.');
@@ -215,6 +220,7 @@ export default {
         margin: 50px 20px;
 
         .card {
+            cursor: pointer;
             height: 200px;
             padding: 15px;
             background: #f0f4f9;

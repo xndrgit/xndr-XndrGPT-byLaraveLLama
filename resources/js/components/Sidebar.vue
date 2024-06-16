@@ -1,14 +1,14 @@
 <template>
     <div class="sidebar">
-        <div class="top">
-            <img alt="" class="menu" src="/imgs/menu_icon.png" @click="toggleExtended"/>
-            <div class="new-chat" @click="newChat">
-                <img alt="" src="/imgs/plus_icon.png"/>
-                <p v-if="extended">New Chat</p>
+        <div class="top d-flex flex-column align-items-center justify-content-center">
+            <img alt="" class="m-0 menu" src="/imgs/menu_icon.png" @click="toggleExtended"/>
+            <div class="new-chat" @click="show">
+                <img alt="" src="/imgs/house.png"/>
+                <p v-if="extended">Home</p>
             </div>
             <div v-if="extended" class="recent">
-                <p class="recent-title">Recent</p>
-                <div class="recent-entry">
+                <p class="recent-title text-center fw-bold">Recent</p>
+                <div class="recent-entry" @click="hide">
                     <img alt="" src="/imgs/message_icon.png"/>
                     <p>What is react...</p>
                 </div>
@@ -28,6 +28,7 @@
 export default {
     data() {
         return {
+            showResult: false,
             extended: true,
             bottomItems: [
                 { icon: '/imgs/question_icon.png', label: 'Help' },
@@ -40,8 +41,11 @@ export default {
         toggleExtended() {
             this.extended = !this.extended;
         },
-        newChat() {
-            // Implement logic for new chat functionality
+        show() {
+            this.$emit('show-result', false);
+        },
+        hide() {
+            this.$emit('show-result', true);
         }
     }
 };
@@ -71,7 +75,7 @@ export default {
         display: inline-flex;
         align-items: center;
         gap: 10px;
-        padding: 10px 15px;
+        padding: 15px;
         background: #e6eaf1;
         border-radius: 50px;
         font-size: 14px;
