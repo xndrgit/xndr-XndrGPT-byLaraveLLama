@@ -10,7 +10,7 @@
                 <p class="recent-title text-center fw-bold">Recent</p>
                 <div class="recent-entry" @click="hide">
                     <img alt="" src="/imgs/message_icon.png"/>
-                    <p>What is react...</p>
+                    <p>Hello, Xndr. How can I help you today?</p>
                 </div>
             </div>
         </div>
@@ -96,7 +96,7 @@ export default {
 
     .recent-entry {
         display: flex;
-        align-items: start;
+        align-items: center;
         gap: 10px;
         padding: 10px 40px 10px 10px;
         border-radius: 50px;

@@ -90,16 +90,16 @@ export default {
             ],
             cards: [
                 {
-                    message: 'Hello, Xndr. How can I help you today?',
+                    message: 'Why the sun is red?',
                 },
                 {
-                    message: 'Hello, Xndr. How can I help you today?',
+                    message: 'Why the sky is blue?',
                 },
                 {
-                    message: 'Hello, Xndr. How can I help you today?',
+                    message: 'Why the grass is green?',
                 },
                 {
-                    message: 'Hello, Xndr. How can I help you today?',
+                    message: 'Are you a lama? How is it possible?!',
                 },
             ],
 
