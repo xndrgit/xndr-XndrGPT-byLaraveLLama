@@ -90,16 +90,16 @@ export default {
             ],
             cards: [
                 {
-                    message: 'Why the sun is red?',
+                    message: 'Do llamas secretly want to be unicorns but just can’t find the right horn?'
                 },
                 {
-                    message: 'Why the sky is blue?',
+                    message: 'Do llamas ever get jealous of alpacas’ fluffiness, or are they just cool with it?'
                 },
                 {
-                    message: 'Why the grass is green?',
+                    message: 'Are llamas plotting world domination, or are they just content with being adorable?'
                 },
                 {
-                    message: 'Are you a lama? How is it possible?!',
+                    message: 'If a llama joined a boy band, would it be the lead singer or the backup dancer?'
                 },
             ],
 
