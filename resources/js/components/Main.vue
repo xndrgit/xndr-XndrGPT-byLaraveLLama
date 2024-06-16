@@ -13,8 +13,8 @@
                 </div>
                 <div class="cards d-none d-lg-flex">
                     <!-- Repeatable cards -->
-                    <div v-for="(_, index) in 4" :key="index" class="card">
-                        <p>Suggest beautiful places to see on an upcoming road trip</p>
+                    <div v-for="(card, index) in cards" :key="index" class="card" @click="onSentCard(card.message)">
+                        <p>{{ card.message }}</p>
                         <img alt="" src="/imgs/compass_icon.png"/>
                     </div>
                 </div>
@@ -88,7 +88,20 @@ export default {
                     from: 'bot',
                 },
             ],
-
+            cards: [
+                {
+                    message: 'Hello, Xndr. How can I help you today?',
+                },
+                {
+                    message: 'Hello, Xndr. How can I help you today?',
+                },
+                {
+                    message: 'Hello, Xndr. How can I help you today?',
+                },
+                {
+                    message: 'Hello, Xndr. How can I help you today?',
+                },
+            ],
 
             input: '',
             showResult: null,
@@ -109,12 +122,34 @@ export default {
                 });
             }
         },
-        onSent() {
+        onSent(input) {
             if (this.input.trim() === '') return;
 
             // Add user's prompt to history
             this.history.push({
                 message: this.input,
+                from: 'user'
+            });
+            this.scrollToBottom();
+
+            // Implement logic for sending a prompt to the backend
+            this.showResult = true;
+            this.recentPrompt = this.input;
+            this.input = '';
+            this.loading = true;
+
+
+            this.$nextTick(() => {
+                this.scrollToBottom();
+                this.getResponse();
+            });
+        },
+        onSentCard(input) {
+            console.log("card activated");
+
+            // Add user's prompt to history
+            this.history.push({
+                message: input,
                 from: 'user'
             });
             this.scrollToBottom();
