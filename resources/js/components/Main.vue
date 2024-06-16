@@ -175,7 +175,7 @@ export default {
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({ prompt: this.recentPrompt }),
+                    body: JSON.stringify({ prompt: this.history }),
                 });
 
                 if (!res.ok) {
