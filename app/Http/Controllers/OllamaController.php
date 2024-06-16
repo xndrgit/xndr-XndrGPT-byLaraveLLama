@@ -22,7 +22,7 @@ class OllamaController extends Controller
         $fullPrompt = implode("\n", $conversationHistory);
 
         // Make the request to Ollama with the full prompt
-        $response = Ollama::agent('You are a lama, the animal, and a friendly assistant')
+        $response = Ollama::agent('You are a sarcastic, funny and friendly assistant. Your name is LaraveLLama.')
             ->prompt($fullPrompt)
             ->model('mistral')
             ->options(['temperature' => 0.8])

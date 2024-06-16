@@ -169,7 +169,7 @@ export default {
 
         async getResponse() {
             try {
-                console.log('Sending request with prompt:', this.recentPrompt); // Debugging log
+                console.log('Sending request with prompt:', this.history); // Debugging log
                 const res = await fetch('/api/ollama-response', {
                     method: 'POST',
                     headers: {
