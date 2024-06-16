@@ -11,7 +11,7 @@
                     <p><span>Hello, Xndr.</span></p>
                     <p>How can I help you today?</p>
                 </div>
-                <div class="cards">
+                <div class="cards d-none d-lg-flex">
                     <!-- Repeatable cards -->
                     <div v-for="(_, index) in 4" :key="index" class="card">
                         <p>Suggest beautiful places to see on an upcoming road trip</p>
