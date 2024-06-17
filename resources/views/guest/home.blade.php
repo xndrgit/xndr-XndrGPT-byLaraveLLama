@@ -7,6 +7,7 @@
 
     <title>XndrGPT - LaraveLLama</title>
     @vite('resources/sass/app.scss')
+    @vite('resources/js/app.js')
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
