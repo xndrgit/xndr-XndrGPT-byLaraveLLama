@@ -1,5 +1,5 @@
-# XndrGPT
-XndrGPT is a personal, local, AI chat interface powered by the OLLAMA API. The frontend code and API integration are open source.
+# XndrGPT - LaraveLLama
+XndrGPT is a personal, local, AI chat interface powered by the Ollama API & LaraveLLama. The frontend code and API integration are open source.
 
 ## A sneak peek into what we have here🙈 :
 ![image](https://github.com/xndrgit/xndr-XndrGPT-byLaraveLLama/assets/115892862/a3b3dbb7-e2cb-42e0-90e0-f86150b7d835)
